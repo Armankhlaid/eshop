@@ -83,7 +83,7 @@ class _RegisterState extends State<MyApp>{
                         child: Text('Register'),
                     padding: EdgeInsets.only(left: 140,right: 140),
                     shape:  new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                     color: Color.fromRGBO(255, 100, 40, 1.0),
+                      color: Color.fromRGBO(225, 230, 245, 1.0),
                         ),
 
             
@@ -95,6 +95,7 @@ class _RegisterState extends State<MyApp>{
                         onPressed: (){},
                         child: Text('Cancel'),
                     padding: EdgeInsets.only(left: 145,right: 145),
+                     color: Color.fromRGBO(225, 230, 245, 1.0),
                     shape:  new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                     
                         ),

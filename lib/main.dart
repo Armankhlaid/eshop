@@ -75,7 +75,7 @@ class _LoginState extends State<Login> {
                     child: Text('Forgot Password')),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 70, top: 40),
+                padding: EdgeInsets.only(left: 100, top: 40),
                 child: Container(
                   child: Row(
                     children: <Widget>[
@@ -85,20 +85,20 @@ class _LoginState extends State<Login> {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => Dashboard()));
                         },
-                        color: Color.fromRGBO(255, 100, 40, 1.0),
+                        color: Color.fromRGBO(225, 230, 245, 1.0),
                         child: Text('Login'),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(30.0)),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 100),
+                        padding: EdgeInsets.only(left: 40),
                       ),
                       RaisedButton(
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => MyApp()));
                         },
-                        color: Color.fromRGBO(255, 100, 40, 1.0),
+                        color: Color.fromRGBO(225, 230, 245, 1.0),
                         child: Text('Register'),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(30.0)),
