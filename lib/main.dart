@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
    final email = TextEditingController();
   final password= TextEditingController();
   FirebaseAuth firebaseAuth= FirebaseAuth.instance;
-
+  final focus= FocusNode();
   @override
   void dispose(){
     super.dispose();
@@ -45,6 +45,7 @@ class _LoginState extends State<Login> {
   }
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text("Login Screen"),
@@ -57,7 +58,7 @@ class _LoginState extends State<Login> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 30, bottom: 20),
+                padding: EdgeInsets.only(top:34, bottom: 20),
                 child: Hero(
                   tag: 'Logo',
                   child: FlutterLogo(
@@ -68,15 +69,21 @@ class _LoginState extends State<Login> {
               Padding(
                 padding: EdgeInsets.only(left: 40, right: 40,top: 10),
                 child: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  autofocus: true,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(hintText: 'Email'),
                   controller: email,
+                  onFieldSubmitted: (v){
+                FocusScope.of(context).requestFocus(focus);
+              },
                 ),
               ),
               Padding(
+                
                 padding: EdgeInsets.only(left: 40, right: 40),
                 child: TextFormField(
-                  
+                  focusNode: focus,
                   obscureText: true,
                   decoration: InputDecoration(hintText: 'Password'),
                   controller: password,
@@ -160,7 +167,7 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.bold,
                           color: Colors.blue),
                 ),
-              )
+              ))
             ],
           ),
         ));

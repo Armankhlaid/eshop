@@ -11,6 +11,9 @@ class _RegisterState extends State<MyApp> {
   final username = TextEditingController();
   final email = TextEditingController();
   final password = TextEditingController();
+  final focus1= FocusNode();
+  final focus2= FocusNode();
+  final focus3= FocusNode();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   @override
   void dispose() {
@@ -18,6 +21,10 @@ class _RegisterState extends State<MyApp> {
     username.dispose();
     email.dispose();
     password.dispose();
+    focus1.dispose();
+    focus2.dispose();
+    focus3.dispose();
+    
   }
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -51,24 +58,39 @@ class _RegisterState extends State<MyApp> {
                       Padding(
                         padding: EdgeInsets.only(left: 40, right: 40,top: 50),
                         child: TextFormField(
+                          textInputAction: TextInputAction.next,
+                          focusNode: focus1,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(hintText: 'User Name'),
                           controller: username,
+                          onEditingComplete: (){
+                            FocusScope.of(context).requestFocus(focus2);
+                          },
+
                         ),
                       ),
                       
                       Padding(
                         padding: EdgeInsets.only(left: 40, right: 40,top: 30),
                         child: TextFormField(
+                           textInputAction: TextInputAction.next,
+                          
+
+                          focusNode: focus2,
+                          
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(hintText: 'Email'),
                          controller: email,
+                         onEditingComplete: (){
+                            FocusScope.of(context).requestFocus(focus3);
+                         },
                         ),
                       ),
                     
                       Padding(
                         padding: EdgeInsets.only(left: 40, right: 40,top: 30),
                         child: TextFormField(
+                          focusNode: focus3,
                           obscureText: true,
                           decoration: InputDecoration(hintText: 'Password'),
                           controller: password,
