@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "100210065059",
+    "firebase_url": "https://vencus-1563260690747.firebaseio.com",
+    "project_id": "vencus-1563260690747",
+    "storage_bucket": "vencus-1563260690747.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100210065059:android:70e87c719dd8e987",
+        "android_client_info": {
+          "package_name": "com.example.vencus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100210065059-5ahcd8h2hhpbghfcs5v8gu3d31kqd7o1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vencus",
+            "certificate_hash": "bf2b352a041748925c25acaac5d9408331f093c4"
+          }
+        },
+        {
+          "client_id": "100210065059-6ueh1pndln32ragq122bd2t8e5m6c3oc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKQ5DmMa5gNHgJMWoVnI5b7_rV5JX8Zr4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100210065059-6ueh1pndln32ragq122bd2t8e5m6c3oc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
