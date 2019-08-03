@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'dashboard.dart';
 class SignupDetail extends StatefulWidget {
   @override
   _SignupDetailState createState() => _SignupDetailState();
@@ -108,7 +108,11 @@ class _SignupDetailState extends State<SignupDetail> {
                       Padding(
                         padding: EdgeInsets.only(top: 20),
                         child: RaisedButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=>Dashboard())
+                            );
+                          },
                           child: Text("Register"),
                           shape: new RoundedRectangleBorder(borderRadius:new BorderRadius.circular(30)),
                           padding: EdgeInsets.only(left: 140,right: 140,top: 15,bottom: 15),
