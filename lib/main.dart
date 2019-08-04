@@ -32,7 +32,7 @@ class _LoginState extends State<Login> {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final focus = FocusNode();
   final formkey = new GlobalKey<FormState>();
-  validateform(){
+ bool validateform(){
     print("Form Validating...");
     if(formkey.currentState.validate()){
       formkey.currentState.save();
@@ -179,6 +179,10 @@ class _LoginState extends State<Login> {
                     child: RaisedButton(
                       onPressed: ()async {
                         String user= await widget.auth.signInWithGoogle();
+                        if(user!=null){
+                          Navigator.push(context, 
+                          MaterialPageRoute(builder: (context)=>MyApp()));
+                        }
                       },
                       color: Color.fromRGBO(178, 49, 33, 1),
                       child: Text(
