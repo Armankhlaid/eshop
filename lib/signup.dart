@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'dashboard.dart';
+import 'package:vencus/auth.dart';
 import 'signupdetails.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'auth.dart';
 class MyApp extends StatefulWidget {
+  final BaseAuth auth;
+  MyApp({this.auth});
   _RegisterState createState() => _RegisterState();
 }
 
 class _RegisterState extends State<MyApp> {
+  
   final username = TextEditingController();
   final email = TextEditingController();
   final password = TextEditingController();
@@ -119,19 +122,25 @@ class _RegisterState extends State<MyApp> {
                           Padding(
                             padding: EdgeInsets.only(left: 0, right: 0, top: 40),
                             child: RaisedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 bool check=fromvalidation();
 
                                 if (check==false) {
-                                  
+                                  print(
+                                    "validation error"
+                                  )
                                 } else {
                                   createuser();
-                                 
+                                  String user= await widget.auth.createUserWithEmailAndPassword(email.text, password.text);
+                                   print("$user");
                                   //     MaterialPageRoute(
                                   //         builder: (context) => Dashboard()));
-                              Navigator.push(context,
+                                  if(user!=null){
+                                      Navigator.push(context,
                                  MaterialPageRoute(
                                     builder: (context)=> SignupDetail()));
+                                  }
+                            
                                 }
                               },
                               child: Text('Next'),

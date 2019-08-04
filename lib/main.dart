@@ -1,26 +1,33 @@
-import 'package:flutter/material.dart';
-import 'signup.dart';
-import 'dashboard.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'auth.dart';
+import 'dashboard.dart';
+import 'signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'splash.dart';
+import 'customerdashboard.dart';
 void main() => runApp(MaterialApp(
-      home: Logicclass(),
+      home: Splashpage(),
     ));
 
-class Logicclass extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Login();
-  }
-}
-
 class Login extends StatefulWidget {
+  Login({this.auth});
+  final BaseAuth auth;
   @override
+
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-  final email = TextEditingController();
-  final password = TextEditingController();
+  final email= TextEditingController();
+  final password= TextEditingController();
+  
+// google auto signin variable
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+
    bool valid=false;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final focus = FocusNode();
@@ -90,7 +97,7 @@ class _LoginState extends State<Login> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(hintText: 'Email'),
                     controller: email,
-                    validator: (val)=> val.isEmpty ? "Email Empty" : null,
+                    validator: (val)=> val.isEmpty ? "Email Empty" : validateemail(val),
                     onFieldSubmitted: (v) {
                       FocusScope.of(context).requestFocus(focus);
                     },
@@ -124,16 +131,21 @@ class _LoginState extends State<Login> {
                     child: Row(
                       children: <Widget>[
                         RaisedButton(
-                          onPressed: () {
+                          onPressed: () async {
                           bool check=  validateform();
                           if (check==false) {
                               
                             } else {
-                              createuser();
-                              Navigator.push(
+                            String user= await widget.auth.signInWithEmailandPassword(email.text, password.text);
+                            print("$user");
+                            if(user!=null){
+                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
+                                
                                       builder: (context) => Dashboard()));
+                            }
+                             
                             }
 
                           },
@@ -149,7 +161,7 @@ class _LoginState extends State<Login> {
                         RaisedButton(
                           onPressed: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => MyApp()));
+                                MaterialPageRoute(builder: (context) => MyApp(auth:  Auth(),)));
                           },
                           color: Color.fromRGBO(225, 230, 245, 1.0),
                           child: Text('Register'),
@@ -165,17 +177,19 @@ class _LoginState extends State<Login> {
                 Padding(
                     padding: EdgeInsets.only(top: 20, left: 40, right: 40),
                     child: RaisedButton(
-                      onPressed: () {},
-                      color: Color.fromRGBO(59, 89, 152, 1),
+                      onPressed: ()async {
+                        String user= await widget.auth.signInWithGoogle();
+                      },
+                      color: Color.fromRGBO(178, 49, 33, 1),
                       child: Text(
-                        "Log in with facebook",
+                        "Signup with Gmail",
                         style: TextStyle(
                           fontSize: 15.3,
                           color: Colors.white,
                         ),
                       ),
                       padding: EdgeInsets.only(
-                          left: 94, right: 94, top: 10, bottom: 10),
+                          left: 103, right: 103, top: 10, bottom: 10),
                       shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0),
                       ),
@@ -185,6 +199,10 @@ class _LoginState extends State<Login> {
                     child: Align(
                         alignment: Alignment.center,
                         child: InkWell(
+                          onTap: (){
+                            Navigator.push(context, 
+                            MaterialPageRoute(builder: (context)=> Customerdashboard()));
+                          },
                           child: Text(
                             'Become a vencus member',
                             style: TextStyle(
@@ -197,8 +215,22 @@ class _LoginState extends State<Login> {
         ));
   }
 
-  Future<void> createuser() async {
-    FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email.text, password: password.text);
+  String validateemail(String value){
+    Pattern pattern= r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex= new RegExp(pattern);
+   if( regex.hasMatch(value)) { return null ;}else{ return"Enter valid Email";}
   }
+
+  Future<void> _signinWithGoogle(BuildContext context)async{
+    final GoogleSignInAccount googleuser= await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleauth= await googleuser.authentication;
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleauth.accessToken,
+      idToken: googleauth.idToken,
+    );
+    var userDetails = await _firebaseAuth.signInWithCredential(credential);
+    print("$userDetails");
+  }
+
+ 
 }
